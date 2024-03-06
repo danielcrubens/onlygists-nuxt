@@ -21,6 +21,6 @@ export default defineNuxtConfig({
 
   primevue: {
     options: { unstyled: true },
-    importPT: { as: "lara", from: "@/assets/presets/lara/" }
+    importPT: { as: 'lara', from: '@/assets/presets/lara/' }
   }
 })
