@@ -8,11 +8,13 @@
     </p>
 
     <div class="flex flex-col justify-center items-center">
-      <Button label="Continuar como creator" icon-pos="right" icon="pi pi-arrow-right" />
+      <Button @click="()=> emit('wants-be-creator')" label="Continuar como creator" icon-pos="right" icon="pi pi-arrow-right" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-
+ const emit = defineEmits<{
+  (e: 'wants-be-creator'):void
+  }>()
 </script>
