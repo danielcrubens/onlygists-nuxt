@@ -3,9 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
+    'nuxt-primevue',
     '@nuxtjs/google-fonts',
     '@nuxtjs/tailwindcss',
-    'nuxt-primevue',
   ],
 
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
@@ -18,4 +18,9 @@ export default defineNuxtConfig({
       Inter: [300, 500, 800],
     },
   },
+
+  primevue: {
+    options: { unstyled: true },
+    importPT: { as: "lara", from: "@/assets/presets/lara/" }
+  }
 })
