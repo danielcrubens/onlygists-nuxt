@@ -1,8 +1,12 @@
 <template>
- <Header/> 
+  <MainContent>
+    <template #header>
+ <Header/>
+ </template> 
+ <template #content>
  <Hero/>
- 
-
+</template> 
+</MainContent>
 </template>
 
 <script setup lang="ts">
