@@ -7,6 +7,7 @@
       <WidgetCondensed :value="5" label="Gist pagos" />
     </WidgetGroupLoader>
   </WidgetGroup>
+  <WidgetDefault title="Todos os gists">gists</WidgetDefault>
 </template>
 
 <script setup lang="ts">
