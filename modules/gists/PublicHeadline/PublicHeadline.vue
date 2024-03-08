@@ -7,7 +7,7 @@
        <div v-html="description" class="font-[Inter] text-gray-700 font-regular text-lg"></div>
        <p class="font-[Inter] font-regular text-gray-500 text-sm md:text-base">
        <i class="pi pi-star"></i>by
-       <NuxtLink :to="`/user/${props.author}`">@{{ props.author }}</NuxtLink>
+       <NuxtLink class="text-primary-500" :to="`/user/${props.author}`">@{{ props.author }}</NuxtLink>
       </p>
   </div> 
 </template>
