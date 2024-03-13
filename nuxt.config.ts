@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     'nuxt-primevue',
     '@nuxtjs/google-fonts',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/supabase',
   ],
 
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
