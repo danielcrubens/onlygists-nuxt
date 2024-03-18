@@ -12,9 +12,18 @@ export default defineNuxtConfig({
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
   
   imports:{
-    dirs: ['./composables/useMarkdown',]
+    dirs: ['./composables/useMarkdown', './composables/useServices']
   },
   
+  runtimeConfig: {
+    public: {
+      nodeEnv: process.env.NODE_ENV,
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY,
+      siteUrl: process.env.SITE_URL,
+    },
+  },
+
   googleFonts: {
     base64: true,
     fontsDir: 'assets/fonts',
