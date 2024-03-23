@@ -21,10 +21,27 @@
 
 <script setup lang="ts">
 import Header from '@/modules/auth/components/Header/Header.vue'
+import HeaderLoader from '@/modules/auth/components/Header/HeaderLoader.vue'
 import { useSession } from '@/modules/auth/composables/useSession/useSession'
+import { useMyself } from '@/modules/users/composables/useMyself/useMyself'
+
 
 const router = useRouter()
 const session = useSession()
+const {loading,user} = useMyself()
+console.log('user',user)
+
+const nickname= computed(()=>{
+  if (!user.value?.name){
+    return 'Usuário'
+  }
+  const [nick] = user.value.name.split(' ')
+  return nick
+})
+
+const profilePic = computed(()=>{
+  return user.value?.avatarUrl
+})
 
 const handleLogout = async () => {
   const { error } = await session.logout()
