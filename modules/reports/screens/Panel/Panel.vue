@@ -4,16 +4,12 @@ Panel
   </div>
 </template>
 
-<script>
-export default {
-  setup () {
-    
+<script setup lang="ts">
+import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
+import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
 
-    return {}
-  }
-}
+const myself = inject(myselfKey) as MyselfContextProvider
+console.log('user', user)
+
 </script>
 
-<style lang="scss" scoped>
-
-</style>
