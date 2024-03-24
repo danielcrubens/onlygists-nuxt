@@ -1,7 +1,22 @@
+<template>
+    <HeadlineEditLoader :loading="loading">
+    <HeadlineEdit
+      :username="user?.username!"
+      :avatar-url="user?.avatarUrl!"
+      class="my-10"
+      @share="handleShare"
+      @navigate-to-profile="handleNavigateToProfile"
+    />
+    </HeadlineEditLoader>
+</template>
+
 <script setup lang="ts">
 import HeadlineEdit from '@/modules/users/components/HeadlineEdit/HeadlineEdit.vue'
-</script>
+import HeadlineEditLoader from '@/modules/users/components/HeadlineEdit/Loader.vue'
+import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
+import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
 
-<template>
-    <HeadlineEdit/>
-</template>
+const {user, loading} = inject(myselfKey) as MyselfContextProvider
+const handleShare = () => {}
+const handleNavigateToProfile = () => {}
+</script>
