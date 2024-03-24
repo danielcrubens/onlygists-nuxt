@@ -6,6 +6,6 @@
 import PublicProfile from '@/modules/users/screens/PublicProfile/PublicProfile.vue'
 
 definePageMeta({
-  layout: 'default'
+  layout: 'chekout'
 })
 </script>
