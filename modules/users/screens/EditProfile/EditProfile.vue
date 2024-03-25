@@ -8,11 +8,19 @@
       @navigate-to-profile="handleNavigateToProfile"
     />
     </HeadlineEditLoader>
+    <WidgetDefault title="Informações básicas">
+    <BasicInfoForm :errors="errors" v-model="user" />
+  </WidgetDefault>
+
+  <WidgetDefault title="Endereço" class="mt-5">
+    <AddressForm v-model="address" @trigger-address-search="handleZipCodeSearch()" :loading="addressLoading" />
+  </WidgetDefault>
 </template>
 
 <script setup lang="ts">
 import HeadlineEdit from '@/modules/users/components/HeadlineEdit/HeadlineEdit.vue'
 import HeadlineEditLoader from '@/modules/users/components/HeadlineEdit/Loader.vue'
+import BasicInfoForm from '@/modules/users/components/BasicInfoForm/BasicInfoForm.vue'
 import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
 
