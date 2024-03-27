@@ -5,6 +5,18 @@ import type { Address } from '@/modules/users/entities/Address/Address'
 type ProfileTable = Database['public']['Tables']['profiles']
 type Row = ProfileTable['Row']
 
+export function searchAddressByZipCodeAdapter(data: SearchAddressResponse): Address {
+  return {
+    zipCode: data.cep,
+    state: data.uf,
+    number: '',
+    city: data.localidade,
+    street: data.logradouro,
+    complement: data.complemento,
+    neighborhood: data.bairro,
+  }
+}
+
 export function getMyselfAdapter(data: Row | null): User | null {
   if (!data) {
     return null
