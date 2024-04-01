@@ -49,7 +49,7 @@ const headline = defineModel<Headline>({
     description: '',
     price: 0,
   },
-})
+})PP
 
 const extension = computed(() => {
   const values = headline.value.title.split('.')

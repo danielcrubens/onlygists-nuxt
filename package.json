@@ -11,6 +11,7 @@
     "db:generate-types": "supabase gen types typescript --local > ./libs/supabase/schema.ts"
   },
   "dependencies": {
+    "@guolao/vue-monaco-editor": "^1.5.1",
     "@nuxtjs/google-fonts": "^3.1.3",
     "@nuxtjs/supabase": "^1.1.7",
     "@nuxtjs/tailwindcss": "^6.11.4",
