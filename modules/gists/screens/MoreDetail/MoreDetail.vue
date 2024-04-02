@@ -1,24 +1,21 @@
 <template>
-  <PublicHeadline/>
-  <GistCodeSnippet/>
+  <PublicHeadlineLoader :loading="loading">
+  <PublicHeadline />
+  </PublicHeadlineLoader>
+  <GistCodeSnippet />
   <div class="flex flex-col md:flex-row gap-2" v-if="gist">
     <Button :label="`Comprar por 10`" class="mt-5 w-full md:w-auto" icon="pi pi-shopping-bag" icon-pos="right" />
-    <Button
-      v-if="session.isLogged() && user?.username === route.params.username"
-      label="Editar este gist"
-      class="mt-5 w-full md:w-auto"
-      @click="handleNavigateToGistEdit()"
-      icon="pi pi-pencil"
-      icon-pos="right"
-    />
+    <Button v-if="session.isLogged() && user?.username === route.params.username" label="Editar este gist"
+      class="mt-5 w-full md:w-auto" @click="handleNavigateToGistEdit()" icon="pi pi-pencil" icon-pos="right" />
   </div>
-  <LazyDialogPaymentSuccess v-model:visible="isPaymentSuccessfully"/>
-  <LazyDialogPaymentError v-model:visible="isPaymentFail"/>
+  <LazyDialogPaymentSuccess v-model:visible="isPaymentSuccessfully" />
+  <LazyDialogPaymentError v-model:visible="isPaymentFail" />
 
 </template>
 
 <script setup lang="ts">
 import PublicHeadline from '@/modules/gists/components/PublicHeadline/PublicHeadline.vue'
+import PublicHeadlineLoader from '@/modules/gists/components/PublicHeadline/Loader.vue'
 import GistCodeSnippet from '@/modules/gists/components/CodeSnippet/CodeSnippet.vue'
 import LazyDialogPaymentSuccess from '@/modules/payments/components/DialogPaymentSuccess/DialogPaymentSuccess.vue'
 import LazyDialogPaymentError from '@/modules/payments/components/DialogPaymentError/DialogPaymentError.vue'
@@ -40,11 +37,11 @@ const handleNavigateToGistEdit = () => {
 }
 
 onMounted(() => {
-  const {success_payment, fail_payment}= route.query
-  if(success_payment){
+  const { success_payment, fail_payment } = route.query
+  if (success_payment) {
     isPaymentSuccessfully.value = true
   }
-  if(fail_payment){
+  if (fail_payment) {
     isPaymentFail.value = true
   }
 })
