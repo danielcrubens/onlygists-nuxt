@@ -5,17 +5,29 @@ import type { Address } from '@/modules/users/entities/Address/Address'
 type ProfileTable = Database['public']['Tables']['profiles']
 type Row = ProfileTable['Row']
 
-export function searchAddressByZipCodeAdapter(data: SearchAddressResponse): Address {
+export function readOneByUsernameAdapter(data: Row | null): User | null {
+  if (!data) {
+    return null
+  }
+
+  const address = data.address as unknown as Address
+
   return {
-    zipCode: data.cep,
-    state: data.uf,
-    number: '',
-    city: data.localidade,
-    street: data.logradouro,
-    complement: data.complemento,
-    neighborhood: data.bairro,
+    id: data.id,
+    avatarUrl: data.avatar_url,
+    username: data.username,
+    name: data.name,
+    site: data.site ?? undefined,
+    bio: data.bio ?? undefined,
+    phone: data.phone ?? undefined,
+    address,
+    createdAt: new Date(data.created_at),
   }
 }
+
+export function readOneByUsernameAdapter(data: Row | null): User | null {
+}
+
 
 export function getMyselfAdapter(data: Row | null): User | null {
   if (!data) {
