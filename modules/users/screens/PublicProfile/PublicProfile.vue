@@ -1,12 +1,12 @@
 <template>
   <PublicHeadline v-if="user" :avatar-url="user.avatarUrl" :name="user.name" :bio="user.bio" :city="user.address?.city"
     :state="user.address?.state" class="my-10" />
-    <PublicHeadlineEmpty v-else />
+  <PublicHeadlineEmpty v-else />
   <WidgetGroup>
-    <WidgetGroupLoader :loading="false" :amount="3">
-      <WidgetCondensed :value="10" label="Gist  do total" />
-      <WidgetCondensed :value="5" label="Gist gratuitos" />
-      <WidgetCondensed :value="5" label="Gist pagos" />
+    <WidgetGroupLoader :loading="reportLoading" :amount="3">
+      <WidgetCondensed :value="totalGists" label="Gist  do total" />
+      <WidgetCondensed :value="totalFreeGists" label="Gist gratuitos" />
+      <WidgetCondensed :value="totalPaidGists" label="Gist pagos" />
     </WidgetGroupLoader>
   </WidgetGroup>
   <WidgetDefault title="Todos os gists">
@@ -28,6 +28,7 @@ import WidgetCondensed from '@/modules/reports/components/Widget/Condensed/Conde
 import GistCardGroup from '@/modules/gists/components/Card/Group/Group.vue'
 import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vue'
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
+import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 
 const route = useRoute()
 const router = useRouter()
@@ -36,6 +37,16 @@ const services = useServices()
 const { data: user } = await useAsyncData('user-public-profile', () => {
   const username = route.params.username as string
   return services.users.readOneByUsername(username)
+})
+
+const {
+  loading: reportLoading,
+  totalGists,
+  totalFreeGists,
+  totalPaidGists,
+} = useGistsReport({
+  user,
+  isMyself: false,
 })
 
 const { gists, loading, fetchMoreGistsByUsername } = useGistList({
