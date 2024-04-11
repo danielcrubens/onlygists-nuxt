@@ -2,18 +2,18 @@
   <PublicHeadline v-if="user" :avatar-url="user.avatarUrl" :name="user.name" :bio="user.bio" :city="user.address?.city"
     :state="user.address?.state" class="my-10" />
   <PublicHeadlineEmpty v-else />
-  <WidgetGroup>
+  <WidgetGroup v-if="user">
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed :value="totalGists" label="Gist  do total" />
       <WidgetCondensed :value="totalFreeGists" label="Gist gratuitos" />
       <WidgetCondensed :value="totalPaidGists" label="Gist pagos" />
     </WidgetGroupLoader>
   </WidgetGroup>
-  <WidgetDefault title="Todos os gists">
+  <WidgetDefault title="Todos os gists" v-if="gists.length !== 0">
     <GistCardGroup>
-      <GistCardGroupLoader :loading="false">
-        <GistCardItem @tap="handleNavigateToDetail" v-for="i in 10" key="n" id="123" title="useCurrentUser.ts"
-          description="Hook para controlar a **store** do usuário" :price="10" lang="typescript" />
+      <GistCardGroupLoader :loading="loading">
+        <GistCardItem @tap="handleNavigateToDetail" v-for="gist in gists" :key="gist.id" :id="gist.id"
+          :title="gist.title" :description="gist.description" :price="gist.price" :lang="gist.lang" />
       </GistCardGroupLoader>
     </GistCardGroup>
   </WidgetDefault>
@@ -29,6 +29,10 @@ import GistCardGroup from '@/modules/gists/components/Card/Group/Group.vue'
 import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vue'
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
+import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
+import { useScroll } from '@vueuse/core'
+
+
 
 const route = useRoute()
 const router = useRouter()
@@ -37,16 +41,6 @@ const services = useServices()
 const { data: user } = await useAsyncData('user-public-profile', () => {
   const username = route.params.username as string
   return services.users.readOneByUsername(username)
-})
-
-const {
-  loading: reportLoading,
-  totalGists,
-  totalFreeGists,
-  totalPaidGists,
-} = useGistsReport({
-  user,
-  isMyself: false,
 })
 
 const { gists, loading, fetchMoreGistsByUsername } = useGistList({
