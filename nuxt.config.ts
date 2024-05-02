@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
+    '@nuxtjs/color-mode',
   ],
 
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
