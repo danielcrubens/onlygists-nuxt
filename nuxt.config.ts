@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
     '@nuxtjs/color-mode',
+    "@nuxtjs/seo"
   ],
 
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
@@ -15,7 +16,15 @@ export default defineNuxtConfig({
   imports:{
     dirs: ['./composables/useMarkdown', './composables/useServices','./composables/useLogger']
   },
+
+  site: {
+    url: process.env.SITE_URL,
+  },
   
+  ogImage: {
+    fonts: ['Inter:400', 'Inter:700'],
+  },
+
   supabase: {
     redirect: false,
   },
