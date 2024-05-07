@@ -70,9 +70,6 @@ const handleUpdateProfile = () => {
 const handleZipCodeSearch = () => {
   searchZipCode()
 }
-const handleZipCodeSearch = () => {
-  searchZipCode()
-}
 const handleShare = (username:string) => {
   share(username)
 }

@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/libs/supabase/schema'
 import type { User } from '@/modules/users/entities/User/User'
-import { getMyselfAdapter, searchAddressByZipCodeAdapter, readOneByUsernameAdapter  } from './adapters'
+import { getMyselfAdapter, searchAddressByZipCodeAdapter, readOneByUsernameAdapter } from './adapters'
 import type { AxiosInstance } from 'axios'
 import type { SearchAddressResponse } from './types'
 
@@ -27,6 +27,7 @@ export default (client: SupabaseClient<Database>, httpClient: AxiosInstance) => 
     const user = readOneByUsernameAdapter(response.data)
     return user
   },
+
   async update(id: string, { name, site, bio, phone, address }: User) {
     await client
       .from('profiles')
