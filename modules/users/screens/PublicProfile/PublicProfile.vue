@@ -2,13 +2,15 @@
   <PublicHeadline v-if="user" :avatar-url="user.avatarUrl" :name="user.name" :bio="user.bio" :city="user.address?.city"
     :state="user.address?.state" class="my-10" />
   <PublicHeadlineEmpty v-else />
+
   <WidgetGroup v-if="user">
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
-      <WidgetCondensed :value="totalGists" label="Gist  do total" />
-      <WidgetCondensed :value="totalFreeGists" label="Gist gratuitos" />
-      <WidgetCondensed :value="totalPaidGists" label="Gist pagos" />
+      <WidgetCondensed :value="totalGists" label="Gists do total" />
+      <WidgetCondensed :value="totalFreeGists" label="Gists gratuitos" />
+      <WidgetCondensed :value="totalPaidGists" label="Gists pagos" />
     </WidgetGroupLoader>
   </WidgetGroup>
+
   <WidgetDefault title="Todos os gists" v-if="gists.length !== 0">
     <GistCardGroup>
       <GistCardGroupLoader :loading="loading">
@@ -31,8 +33,6 @@ import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
 import { useScroll } from '@vueuse/core'
-
-
 
 const route = useRoute()
 const router = useRouter()
