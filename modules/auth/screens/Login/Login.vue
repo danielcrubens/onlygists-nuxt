@@ -1,7 +1,7 @@
 <template>
   <section class="w-full h-screen flex flex-col items-center justify-center gap-5 bg-gray-50">
-    <Logo/>
-    <SocialForm :loading="loading" @wants-login-with-github="handleGithubLogin"/>
+    <Logo />
+    <SocialForm :loading="loading" @wants-login-with-github="handleGithubLogin" />
   </section>
 </template>
 
@@ -9,8 +9,8 @@
 import SocialForm from '@/modules/auth/components/SocialForm/SocialForm.vue'
 const services = useServices()
 const loading = ref<boolean>(false)
-const handleGithubLogin = async () =>{
+const handleGithubLogin = async () => {
   loading.value = true
-  await services.auth.loginWithGithub()
+  await services.auth.signInWithGithub()
 }
 </script>
