@@ -1,4 +1,5 @@
 <template>
+  <PaymentSetupAlert @setup="handlePaymentSetup"  :loading="false" />
   <WidgetGroup>
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed :value="totalGists" label="Gists do total" />
@@ -27,6 +28,7 @@ import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vu
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
+import PaymentSetupAlert from '@/modules/payments/components/PaymentSetupAlert/PaymentSetupAlert.vue'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
 import { useScroll } from '@vueuse/core'
@@ -68,5 +70,8 @@ watch(
 const handleNavigateToDetail = (id: string) => {
   const { username } = route.params
   router.push(`/${username}/gist/${id}`)
+}
+const handlePaymentSetup =  () => {
+console.log('setup')
 }
 </script>
