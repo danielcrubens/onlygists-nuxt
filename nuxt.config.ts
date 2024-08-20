@@ -8,7 +8,9 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
     '@nuxtjs/color-mode',
-    "@nuxtjs/seo"
+    '@nuxtjs/seo',
+    '@vue-email/nuxt',
+    '@unlok-co/nuxt-stripe',
   ],
 
   css: ['primeicons/primeicons.css','normalize.css/normalize.css'],
@@ -31,6 +33,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     stripeProudctId5BRL: process.env.STRIPE_PRODUCT_ID_5BRL,
+    resendKey: process.env.RESEND_KEY,
     public: {
       nodeEnv: process.env.NODE_ENV,
       supabaseUrl: process.env.SUPABASE_URL,
