@@ -6,7 +6,8 @@
   </PublicHeadlineLoader>
   <GistCodeSnippet v-if="gist" :is-paid="gist.isPaid" :loading="loadingContent" :code="gistContent" :lang="gist.lang" />
   <div class="flex flex-col md:flex-row gap-2" v-if="gist">
-    <Button :label="`Comprar por 10`" class="mt-5 w-full md:w-auto" icon="pi pi-shopping-bag" icon-pos="right" />
+    <Button v-if="gist && user?.username !== route.params.username" @click="handlePay"
+      :label="`Comprar por ${gist.price}`" class="mt-5 w-full md:w-auto" icon="pi pi-shopping-bag" icon-pos="right" />
     <Button v-if="session.isLogged() && user?.username === route.params.username" label="Editar este gist"
       class="mt-5 w-full md:w-auto" @click="handleNavigateToGistEdit()" icon="pi pi-pencil" icon-pos="right" />
   </div>
@@ -24,11 +25,13 @@ import LazyDialogPaymentSuccess from '@/modules/payments/components/DialogPaymen
 import LazyDialogPaymentError from '@/modules/payments/components/DialogPaymentError/DialogPaymentError.vue'
 import { useSession } from '@/modules/auth/composables/useSession/useSession'
 import { useGistContent } from '@/modules/gists/composables/useGistContent/useGistContent'
+import { useStripeCheckout } from '@/modules/payments/composables/useStripeCheckout/useStripeCheckout'
 import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
 
 const { user } = inject(myselfKey) as MyselfContextProvider
 const session = useSession()
+const { checkoutUrl, createCheckoutUrl } = useStripeCheckout()
 
 const route = useRoute()
 const services = useServices()
@@ -60,7 +63,19 @@ onMounted(() => {
     isPaymentFail.value = true
   }
 })
+const handlePay = async () => {
+  await createCheckoutUrl({
+    username: route.params.username as string,
+    gistId: route.params.id as string,
+    price: String(gist.value?.price!),
+  })
 
+  if (!checkoutUrl.value) {
+    return
+  }
+
+  window.location.href = checkoutUrl.value
+}
 defineOgImage({
   component: 'GistDetail',
   props: {
