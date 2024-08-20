@@ -1,5 +1,6 @@
 <template>
-  <PaymentSetupAlert @setup="handlePaymentSetup"  :loading="false" />
+  <PaymentSetupAlert @setup="handlePaymentSetup" v-if="!isValid" :loading="paymentCreateLoading" />
+
   <WidgetGroup>
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed :value="totalGists" label="Gists do total" />
@@ -12,8 +13,16 @@
   <WidgetDefault title="Todos os gists" v-if="gists.length !== 0">
     <GistCardGroup>
       <GistCardGroupLoader :loading="loading">
-        <GistCardItem @tap="handleNavigateToDetail" v-for="gist in gists" :key="gist.id" :id="gist.id"
-          :title="gist.title" :description="gist.description" :price="gist.price" :lang="gist.lang" />
+        <GistCardItem
+          @tap="handleNavigateToDetail"
+          v-for="gist in gists"
+          :key="gist.id"
+          :id="gist.id"
+          :title="gist.title"
+          :description="gist.description"
+          :price="gist.price"
+          :lang="gist.lang"
+        />
       </GistCardGroupLoader>
     </GistCardGroup>
   </WidgetDefault>
@@ -31,11 +40,15 @@ import type { MyselfContextProvider } from '@/modules/users/composables/useMysel
 import PaymentSetupAlert from '@/modules/payments/components/PaymentSetupAlert/PaymentSetupAlert.vue'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
+import { useStripeAccountCreate } from '@/modules/payments/composables/useStripeAccountCreate/useStripeAccountCreate'
+import { useStripeAccountValidate } from '@/modules/payments/composables/useStripeAccountValidate/useStripeAccountValidate'
 import { useScroll } from '@vueuse/core'
 
 const route = useRoute()
 const router = useRouter()
 const { user } = inject(myselfKey) as MyselfContextProvider
+const { loading: paymentCreateLoading, create } = useStripeAccountCreate()
+const { isValid, validate } = useStripeAccountValidate()
 
 const {
   loading: reportLoading,
@@ -71,7 +84,18 @@ const handleNavigateToDetail = (id: string) => {
   const { username } = route.params
   router.push(`/${username}/gist/${id}`)
 }
-const handlePaymentSetup =  () => {
-console.log('setup')
+
+const handlePaymentSetup = async () => {
+  const response = await create(user.value?.email!)
+
+  if (!response) {
+    return
+  }
+
+  window.location.href = response.onboardingUrl
 }
+
+onMounted(() => {
+  validate(user.value?.paymentConnectedAccount)
+})
 </script>

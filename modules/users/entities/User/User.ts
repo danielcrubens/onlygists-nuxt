@@ -6,8 +6,10 @@ export interface User {
   username: string
   name: string
   site?: string
+  email: string
   bio?: string
   phone?: string
   address?: Address
   createdAt: Date
+  paymentConnectedAccount?: string
 }
